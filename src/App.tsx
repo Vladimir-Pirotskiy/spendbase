@@ -1,14 +1,14 @@
 import './App.css'
 import 'antd/dist/reset.css'
-import {Typography} from "antd";
+import {Lamp} from "@/components/ui/lamp.tsx";
 
 function App() {
 
     return (
         <>
-            <Typography.Title className="text-3xl font-bold underline">
-                Index Page
-            </Typography.Title>
+            <Lamp />
+
+
         </>
     )
 }
