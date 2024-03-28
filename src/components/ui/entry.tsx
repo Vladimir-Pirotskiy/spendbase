@@ -1,8 +1,8 @@
-import { TFiles } from "../../../types";
-import { FC, useState } from "react";
-import { cn } from "@/utils/cn.ts";
-import { AnimatePresence, motion } from "framer-motion";
-import { FolderOutlined, FileOutlined } from '@ant-design/icons';
+import {TFiles} from "../../../types";
+import {FC, useState} from "react";
+import {cn} from "@/utils/cn.ts";
+import {AnimatePresence, motion} from "framer-motion";
+import {FolderOutlined, FileOutlined} from '@ant-design/icons';
 
 
 type EntryProps = {
@@ -12,11 +12,11 @@ type EntryProps = {
     setActiveItem: (val: string) => void;
 };
 
-export const Entry: FC<EntryProps> = ({ entry, depth, activeItem, setActiveItem }: EntryProps) => {
+export const Entry: FC<EntryProps> = ({entry, depth, activeItem, setActiveItem}: EntryProps) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     return (
-        <div>
+        <div className='pt-2'>
             <button onClick={() => {
                 const entryName = isExpanded ? '' : entry.name;
                 setActiveItem(entryName);
@@ -46,27 +46,28 @@ export const Entry: FC<EntryProps> = ({ entry, depth, activeItem, setActiveItem 
                 >
                     {entry.name}
                     {entry.children ? (
-                        <FolderOutlined className='pl-2' />
+                        <FolderOutlined className='pl-2'/>
                     ) : (
-                        <FileOutlined className='pl-2' />
+                        <FileOutlined className='pl-2'/>
                     )}
                 </span>
             </button>
             <AnimatePresence>
-            {isExpanded && (
+                {isExpanded && (
                     <motion.div
                         className={cn(
                             "text-black dark:text-white pl-5 border-l text-2xl font-medium tracking-tight text-transparent",
                             activeItem === entry.name && "text-black dark:text-lime-500 opacity-100"
                         )}
-                        // className='pl-5 border-l border-white m-1.5 text-black dark:text-white text-2xl font-medium tracking-tight text-transparent md:text-2xl overflow-hidden'
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{opacity: 0, height: 0}}
+                        animate={{opacity: 1, height: "auto"}}
+                        exit={{opacity: 0, height: 0}}
+                        transition={{duration: 0.3}}
                     >
                         {entry.children?.map(entryChild => (
-                            <Entry entry={entryChild} depth={depth + 1} activeItem={activeItem} setActiveItem={setActiveItem} key={entryChild.name}  />
+
+                            <Entry entry={entryChild} depth={depth + 1} activeItem={activeItem}
+                                   setActiveItem={setActiveItem} key={entryChild.name}/>
                         ))}
                     </motion.div>
                 )}
