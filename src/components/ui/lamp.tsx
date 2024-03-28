@@ -1,25 +1,63 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
 import {motion} from "framer-motion";
 import {cn} from "@/utils/cn";
+import {useDispatch} from "react-redux";
+import {removeBlur, setBlur} from "@/main.tsx";
 
 export function Lamp() {
-    return (
-        <LampContainer>
-            <motion.h1
-                initial={{opacity: 0.5, y: 100}}
-                whileInView={{opacity: 1, y: 0}}
-                transition={{
-                    delay: 0.3,
-                    duration: 0.8,
-                    ease: "easeInOut",
-                }}
-                className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
-            >
-                Front End Developer  <br/> Test Task | SpendBase
+    // const [isBlurredBg, setIsBlurredBg] = React.useState(false);
+    const dispatch = useDispatch();
 
-            </motion.h1>
-        </LampContainer>
+
+    useEffect(() => {
+
+        const handleKeyDown = (event: any) => {
+            if (event.key === 'Escape') {
+                dispatch(removeBlur())
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+
+    }, []);
+
+    return (
+        <>
+            <LampContainer >
+                <motion.h1
+                    initial={{opacity: 0.5, y: 100}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{
+                        delay: 0.3,
+                        duration: 0.8,
+                        ease: "easeInOut",
+                    }}
+                    className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+                >
+                    Front End Dev <br/> Test Task <br/> SpendBase
+                    <br/><br/>
+                    <button onClick={() => dispatch(setBlur())}
+                            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                    <span
+                        className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"/>
+                        <span
+                            className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-10 py-5 text-2xl font-medium text-white backdrop-blur-3xl">
+          Load Folders
+
+        </span>
+                    </button>
+
+                </motion.h1>
+            </LampContainer>
+
+        </>
+
+
     );
 }
 
