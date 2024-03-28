@@ -95,7 +95,7 @@ function App() {
     const filterFilesByName = (files: TFiles[] | undefined, query: string): TFiles[] | undefined => {
         if (!query || !files) return files;
 
-        let filteredFiles: TFiles[] = [];
+        const filteredFiles: TFiles[] = [];
 
         files.forEach(file => {
             if (file.name.includes(query)) {
