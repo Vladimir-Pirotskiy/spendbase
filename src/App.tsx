@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import Entry from "@/components/ui/entry.tsx";
 import {ChangeEvent, useEffect, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
+import {filterFilesByName} from "@/utils/filterFilesByName.ts";
 
 type TFiles = {
     name: string;
@@ -79,7 +80,7 @@ function App() {
     const [debouncedValue, setDebouncedValue] = useState('');
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value)
+        setInputValue(event.target.value.toLowerCase)
     }
 
     useEffect(() => {
@@ -91,29 +92,6 @@ function App() {
             clearTimeout(handler);
         };
     }, [inputValue]);
-
-    const filterFilesByName = (files: TFiles[] | undefined, query: string): TFiles[] | undefined => {
-        if (!query || !files) return files;
-
-        const filteredFiles: TFiles[] = [];
-
-        files.forEach(file => {
-            if (file.name.includes(query)) {
-                filteredFiles.push({...file});
-                return;
-            }
-
-            if (file.children) {
-                const filteredChildren = filterFilesByName(file.children, query);
-
-                if (filteredChildren && filteredChildren.length > 0) {
-                    filteredFiles.push({...file, children: filteredChildren});
-                }
-            }
-        });
-
-        return filteredFiles;
-    };
 
 
     return (
