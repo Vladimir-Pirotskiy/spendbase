@@ -1,5 +1,11 @@
 # React + TypeScript + Vite + ReduxToolKit + Vitest + TailwindCSS
 
+demo:
+
+```
+https://spendbase-iu6xa9quh-vovas-projects-02cf5a41.vercel.app/
+```
+
 ### Description:
 
 in project implemented:
