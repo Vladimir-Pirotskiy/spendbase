@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + ReduxToolKit + Vitest + TailwindCSS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Description:
 
-Currently, two official plugins are available:
+in project implemented:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React for UI
+- Redux Toolkit for state managment
+- Redux-persist to save and fetch the state
+- Vitest for test
+- Vite
+- Vercel
+- Tailwind, Antd, Radix-Ui
 
-## Expanding the ESLint configuration
+### run project
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+>
+> `yarn run dev`
+>
 
-- Configure the top-level `parserOptions` property like this:
+### run test
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+> `yarn run test`
+>
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Features:
+
+- read file/folder trea
+- create file/folder trea
+- delete file/folder trea
+- controle state
+- search file/folder
+- test search unit test
+- debounce search
+- colapse
+- On clicking on a folder, show the nested directories and files within it. Address all potential scenarios such as not
+  showing an arrow for empty folders, and having an indicator for the active folder.
+
+

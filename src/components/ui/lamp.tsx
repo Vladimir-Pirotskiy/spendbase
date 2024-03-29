@@ -1,20 +1,36 @@
 "use client";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {motion} from "framer-motion";
 import {cn} from "@/utils/cn";
 import {useDispatch} from "react-redux";
-import {removeBlur, setBlur} from "@/main.tsx";
+import {removeBlur, setBlur} from "@/slices/slice.ts";
 
 export function Lamp() {
-    // const [isBlurredBg, setIsBlurredBg] = React.useState(false);
     const dispatch = useDispatch();
+    const [isScrollBlocked, setIsScrollBlocked] = useState(false);
 
+    const handleClick = () => {
+        setIsScrollBlocked(true);
+        dispatch(setBlur());
+    }
 
     useEffect(() => {
+        if (isScrollBlocked) {
+            window.onscroll = () => {
+                window.scrollTo(0, 0);
+            }
+        } else {
+            window.onscroll = () => {
+            };
+        }
+    }, [isScrollBlocked]);
 
+    useEffect(() => {
         const handleKeyDown = (event: any) => {
             if (event.key === 'Escape') {
                 dispatch(removeBlur())
+                setIsScrollBlocked(false);
+
             }
         };
 
@@ -28,7 +44,7 @@ export function Lamp() {
 
     return (
         <>
-            <LampContainer >
+            <LampContainer>
                 <motion.h1
                     initial={{opacity: 0.5, y: 100}}
                     whileInView={{opacity: 1, y: 0}}
@@ -41,7 +57,7 @@ export function Lamp() {
                 >
                     Front End Dev <br/> Test Task <br/> SpendBase
                     <br/><br/>
-                    <button onClick={() => dispatch(setBlur())}
+                    <button onClick={handleClick}
                             className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                     <span
                         className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"/>

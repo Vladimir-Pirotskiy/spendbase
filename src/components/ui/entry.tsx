@@ -4,7 +4,7 @@ import {cn} from "@/utils/cn.ts";
 import {AnimatePresence, motion} from "framer-motion";
 import {FolderOutlined, FileOutlined, DeleteOutlined} from '@ant-design/icons';
 import {useDispatch} from "react-redux";
-import {setIsActive} from "@/main.tsx";
+import {setIsActive} from "@/slices/slice.ts";
 
 
 type EntryProps = {
@@ -12,7 +12,7 @@ type EntryProps = {
     depth: number;
     activeItem: string;
     setActiveItem: (val: string) => void;
-    setFile: (val: TFiles) => void;
+    // setFile: (val: TFiles) => void;
     file: TFiles;
     handleDeleteFileOrFolder: () => void;
 };
@@ -22,7 +22,6 @@ export const Entry: FC<EntryProps> = ({
                                           depth,
                                           activeItem,
                                           setActiveItem,
-                                          setFile,
                                           file,
                                           handleDeleteFileOrFolder
                                       }: EntryProps) => {
@@ -105,7 +104,6 @@ export const Entry: FC<EntryProps> = ({
                                 depth={depth + 1}
                                 activeItem={activeItem}
                                 setActiveItem={setActiveItem}
-                                setFile={setFile}
                                 file={file}
                                 key={entryChild.name}
                                 handleDeleteFileOrFolder={handleDeleteFileOrFolder}

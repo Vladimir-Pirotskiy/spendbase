@@ -1,86 +1,29 @@
 import './App.css'
 import 'antd/dist/reset.css'
 import {Lamp} from "@/components/ui/lamp.tsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Entry from "@/components/ui/entry.tsx";
 import {ChangeEvent, useEffect, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {filterFilesByName} from "@/utils/filterFilesByName.ts";
 import {FileAddOutlined, FolderAddOutlined} from "@ant-design/icons";
+import {TFiles} from "../types";
+import {RootState} from "@reduxjs/toolkit/query";
+import {fileData} from "@/slices/slice.ts";
 
-type TFiles = {
-    name: string;
-    children?: TFiles[]
-}
-
-
-const filesData: TFiles = {
-    name: "root",
-    children: [
-        {
-            name: "node_modules",
-            children: [
-                {
-                    name: ".bin"
-                },
-                {
-                    name: ".cache"
-                }
-            ]
-        },
-        {
-            name: "public",
-            children: [
-                {
-                    name: "index.html"
-                },
-                {
-                    name: "robots.tsx"
-                }
-            ]
-        },
-        {
-            name: "src",
-            children: [
-                {
-                    name: "comp",
-                    children: [
-                        {
-                            name: "ui",
-                            children: [
-                                {
-                                    name: "lamp",
-                                },
-                            ]
-                        },
-                        {
-                            name: "utils",
-                            children: []
-                        },
-                    ]
-                }
-
-            ]
-        },
-        {
-            name: "assets",
-            children: [
-                {
-                    name: "img",
-                    children: []
-                },
-            ]
-        }
-    ]
-}
 
 function App() {
-    const isBlurredBg = useSelector((state: { isBlurredBg: boolean }) => state.isBlurredBg)
-    const activeEntry = useSelector((state: { isActive: TFiles }) => state.isActive)
+    // @ts-ignore
+    const files = useSelector((state: RootState) => state.slice.fileData)
+    // @ts-ignore
+    const isBlurredBg = useSelector((state: RootState) => state.slice.isBlurredBg)
+    // @ts-ignore
+    const activeEntry = useSelector((state: RootState) => state.slice.isActive)
     const [activeItem, setActiveItem] = useState('');
     const [inputValue, setInputValue] = useState('')
     const [debouncedValue, setDebouncedValue] = useState('');
-    const [files, setFiles] = useState(filesData)
+    // const [files, setFiles] = useState(filesData)
+    const dispatch = useDispatch();
 
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +65,7 @@ function App() {
                 data.children.splice(index, 1);
                 return true;
             }
-            for (let child of data.children) {
+            for (const child of data.children) {
                 if (removeFromChildren(child, entryName)) {
                     return true;
                 }
@@ -136,7 +79,7 @@ function App() {
         const cloneDeep = JSON.parse(JSON.stringify(files));
         const newChild: TFiles = {name: `newDirectory(${Math.floor(Math.random() * 1010)})`, children: []};
         insertIntoChildren(cloneDeep, entryName, newChild);
-        setFiles(cloneDeep);
+        dispatch(fileData(cloneDeep))
     }
 
     const handleFileAdd = () => {
@@ -144,14 +87,14 @@ function App() {
         const cloneDeep = JSON.parse(JSON.stringify(files));
         const newChild: TFiles = {name: `newFile(${Math.floor(Math.random() * 1010)})`};
         insertIntoChildren(cloneDeep, entryName, newChild);
-        setFiles(cloneDeep);
+        dispatch(fileData(cloneDeep))
     }
 
     const handleDeleteFileOrFolder = () => {
         const entryName = activeEntry.name
         const cloneDeep = JSON.parse(JSON.stringify(files));
         removeFromChildren(cloneDeep, entryName);
-        setFiles(cloneDeep);
+        dispatch(fileData(cloneDeep))
     }
 
 
@@ -179,7 +122,6 @@ function App() {
                                     <Entry entry={entry} depth={1} setActiveItem={setActiveItem}
                                            key={(entry.name + index)}
                                            activeItem={activeItem}
-                                           setFile={setFiles}
                                            file={files}
                                            handleDeleteFileOrFolder={handleDeleteFileOrFolder}
                                     />
