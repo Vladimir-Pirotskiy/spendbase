@@ -2,7 +2,7 @@
 
 #### Demo:
 
-[https://spendbase-vovas-projects](https://spendbase-iu6xa9quh-vovas-projects-02cf5a41.vercel.app/)
+[https://spendbase.vercel.app/](https://spendbase.vercel.app/)
 
 ### Description:
 
