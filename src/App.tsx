@@ -6,10 +6,10 @@ import Entry from "@/components/ui/entry.tsx";
 import {ChangeEvent, useEffect, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {filterFilesByName} from "@/utils/filterFilesByName.ts";
-import {FileAddOutlined, FolderAddOutlined} from "@ant-design/icons";
+import {CloseOutlined, FileAddOutlined, FolderAddOutlined} from "@ant-design/icons";
 import {TFiles} from "../types";
 import {RootState} from "@reduxjs/toolkit/query";
-import {fileData} from "@/slices/slice.ts";
+import {fileData, removeBlur} from "@/slices/slice.ts";
 
 
 function App() {
@@ -100,11 +100,15 @@ function App() {
 
     return (
         <>
+
             <Lamp/>
             {isBlurredBg &&
                 <>
                     <div
                         className='w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl'>
+                        <CloseOutlined
+                            onClick={() => dispatch(removeBlur())}
+                            className='p-2.5 absolute top-0 right-0 text-black dark:text-white text-2xl font-medium tracking-tight text-transparent'/>
                         <div className='w-80 flex flex-col gap-4'>
                             <Input onChange={handleInputChange} value={inputValue} id="firstname" placeholder="Search"
                                    type="text"/>

@@ -25,9 +25,10 @@ in project implemented:
 
 # Features:
 
-- read file/folder trea
-- create file/folder trea
-- delete file/folder trea
+- esc btn to un-blure
+- read file/folder tree
+- create file/folder tree
+- delete file/folder tree
 - controle state
 - search file/folder
 - test search unit test
