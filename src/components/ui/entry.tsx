@@ -1,8 +1,10 @@
 import {TFiles} from "../../../types";
-import {FC, useState} from "react";
+import {FC, useState,} from "react";
 import {cn} from "@/utils/cn.ts";
 import {AnimatePresence, motion} from "framer-motion";
-import {FolderOutlined, FileOutlined} from '@ant-design/icons';
+import {FolderOutlined, FileOutlined, DeleteOutlined} from '@ant-design/icons';
+import {useDispatch} from "react-redux";
+import {setIsActive} from "@/main.tsx";
 
 
 type EntryProps = {
@@ -10,17 +12,44 @@ type EntryProps = {
     depth: number;
     activeItem: string;
     setActiveItem: (val: string) => void;
+    setFile: (val: TFiles) => void;
+    file: TFiles;
+    handleDeleteFileOrFolder: () => void;
 };
 
-export const Entry: FC<EntryProps> = ({entry, depth, activeItem, setActiveItem}: EntryProps) => {
+export const Entry: FC<EntryProps> = ({
+                                          entry,
+                                          depth,
+                                          activeItem,
+                                          setActiveItem,
+                                          setFile,
+                                          file,
+                                          handleDeleteFileOrFolder
+                                      }: EntryProps) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
+    const dispatch = useDispatch();
+    const [isHovered, setIsHovered] = useState(false);
 
+    const handleDeleteClick = (event: any) => {
+        event.stopPropagation();
+        handleDeleteFileOrFolder();
+    }
+
+    const handleMouseEnter = () => {
+        setTimeout(() => setIsHovered(true), 500)
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setTimeout(() => setIsHovered(false), 1000);
+    };
     return (
-        <div className='pt-2'>
+        <div className='pt-2 '>
             <button onClick={() => {
                 const entryName = isExpanded ? '' : entry.name;
                 setActiveItem(entryName);
                 setIsExpanded(prev => !prev);
+                dispatch(setIsActive(entry))
             }}>
                 {entry.children && (
                     <motion.div
@@ -29,7 +58,7 @@ export const Entry: FC<EntryProps> = ({entry, depth, activeItem, setActiveItem}:
                     >
       <span
           className={cn(
-              "text-black dark:text-white text-2xl font-medium tracking-tight text-transparent",
+              "text-black dark:text-white text-2xl font-medium tracking-tight text-transparent ",
               activeItem === entry.name && "text-black dark:text-lime-500 opacity-100"
           )}
       >
@@ -37,20 +66,25 @@ export const Entry: FC<EntryProps> = ({entry, depth, activeItem, setActiveItem}:
       </span>
                     </motion.div>
                 )}
-                <span
-                    className={cn(
-                        "text-black dark:text-white text-2xl font-medium tracking-tight text-transparent",
-                        activeItem === entry.name && "text-black dark:text-lime-500 opacity-100"
-                    )}
-                    // className={cn('name text-black dark:text-white text-2xl font-medium tracking-tight text-transparent md:text-2xl', {'pl-5': !entry.children})}
-                >
+                <div className='inline-block' onMouseEnter={handleMouseEnter}
+                     onMouseLeave={handleMouseLeave}>
+                    <span
+                        className={cn(
+                            "text-black dark:text-white text-2xl font-medium tracking-tight text-transparent",
+                            activeItem === entry.name && "text-black dark:text-lime-500 opacity-100"
+                        )}
+
+                    >
                     {entry.name}
-                    {entry.children ? (
-                        <FolderOutlined className='pl-2'/>
-                    ) : (
-                        <FileOutlined className='pl-2'/>
-                    )}
-                </span>
+                        {entry.children ? (
+                            <FolderOutlined className='pl-2'/>
+
+                        ) : (
+                            <FileOutlined className='pl-2'/>
+                        )}
+                        {isHovered && activeItem === entry.name &&
+                            <DeleteOutlined onClick={handleDeleteClick} className='pl-2 dark:text-red-500'/>}
+                </span></div>
             </button>
             <AnimatePresence>
                 {isExpanded && (
@@ -66,8 +100,16 @@ export const Entry: FC<EntryProps> = ({entry, depth, activeItem, setActiveItem}:
                     >
                         {entry.children?.map(entryChild => (
 
-                            <Entry entry={entryChild} depth={depth + 1} activeItem={activeItem}
-                                   setActiveItem={setActiveItem} key={entryChild.name}/>
+                            <Entry
+                                entry={entryChild}
+                                depth={depth + 1}
+                                activeItem={activeItem}
+                                setActiveItem={setActiveItem}
+                                setFile={setFile}
+                                file={file}
+                                key={entryChild.name}
+                                handleDeleteFileOrFolder={handleDeleteFileOrFolder}
+                            />
                         ))}
                     </motion.div>
                 )}

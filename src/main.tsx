@@ -7,18 +7,22 @@ import {configureStore, createSlice} from "@reduxjs/toolkit";
 
 const slice = createSlice({
     name: 'blur',
-    initialState: {isBlurredBg: false},
+    initialState: {isBlurredBg: false, isActive: ''},
     reducers: {
         setBlur: (state) => {
             state.isBlurredBg = true
         },
         removeBlur: (state) => {
             state.isBlurredBg = false
+        },
+        setIsActive: (state, action) => {
+            state.isActive = action.payload
         }
+
     }
 })
 
-export const {setBlur, removeBlur} = slice.actions;
+export const {setBlur, removeBlur, setIsActive} = slice.actions;
 
 const store = configureStore({
     reducer: slice.reducer

@@ -6,7 +6,7 @@ export const filterFilesByName = (files: TFiles[] | undefined, query: string): T
     const filteredFiles: TFiles[] = [];
 
     files.forEach(file => {
-        if (file.name.includes(query.toLowerCase())) {
+        if (file.name.includes(query?.toLowerCase())) {
             filteredFiles.push({...file});
             return;
         }
