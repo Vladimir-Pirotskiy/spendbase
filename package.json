@@ -23,7 +23,11 @@
     "react-redux": "^9.1.0",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "tailwind-merge": "^2.2.2"
+    "tailwind-merge": "^2.2.2",
+    "@orbs-network/ton-access": "^2.3.3",
+    "ton": "^13.9.0",
+    "ton-core": "^0.50.0",
+    "ton-crypto": "^3.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
