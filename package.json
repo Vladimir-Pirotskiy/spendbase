@@ -15,6 +15,7 @@
     "@orbs-network/ton-access": "^2.3.3",
     "@radix-ui/react-label": "^2.0.2",
     "@reduxjs/toolkit": "^2.2.2",
+    "@ton/blueprint": "^0.19.1",
     "@ton/ton": "^13.11.1",
     "antd": "^5.15.4",
     "clsx": "^2.1.0",
