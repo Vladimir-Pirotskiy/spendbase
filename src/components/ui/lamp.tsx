@@ -16,7 +16,7 @@ export function Lamp() {
           initial={{opacity: 0.5, y: 100}}
           whileInView={{opacity: 1, y: 0}}
           transition={{
-            delay: 0.3,
+            delay: 0.1,
             duration: 0.8,
             ease: "easeInOut",
           }}
@@ -24,14 +24,14 @@ export function Lamp() {
         >
           STBL Ton Plans
 
-          
+
         </motion.h1>
 
         <motion.div
           initial={{opacity: 0.5, y: 100}}
           whileInView={{opacity: 1, y: 0}}
           transition={{
-            delay: 0.5,
+            delay: 0.3,
             duration: 0.8,
             ease: "easeInOut",
           }}

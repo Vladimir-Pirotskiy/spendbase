@@ -17,20 +17,25 @@ export const MenuItem = ({
                            active,
                            item,
                            children,
+                           isIcon
                          }: {
   setActive: (item: string) => void;
   active: string | null;
   item: string;
   children?: React.ReactNode;
+  isIcon?: boolean
 }) => {
   return (
-    <div onMouseEnter={() => setActive(item)} className="relative ">
-      <motion.p
+    <div onClick={() => console.log('hi')} className="relative ">
+      <motion.div
         transition={{duration: 0.3}}
         className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
       >
-        {item}
-      </motion.p>
+        <div className='flex items-center justify-between gap-2'>
+          {item}
+          {isIcon && <img width='16' height='16' src="src/assets/icon/TON-symbol.svg" alt="icon"/>}
+        </div>
+      </motion.div>
       {active !== null && (
         <motion.div
           initial={{opacity: 0, scale: 0.85, y: 10}}
