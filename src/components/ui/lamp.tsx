@@ -2,6 +2,9 @@
 import React from "react";
 import {motion} from "framer-motion";
 import {cn} from "@/utils/cn";
+import {PlanCard} from "@/components/ui/demo/plan-card.tsx";
+import {plans} from "@/utils/plansData.ts";
+import {PlanType} from "../../../types";
 
 export function Lamp() {
 
@@ -20,7 +23,27 @@ export function Lamp() {
           className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
         >
           STBL Ton Plans
+
+          
         </motion.h1>
+
+        <motion.div
+          initial={{opacity: 0.5, y: 100}}
+          whileInView={{opacity: 1, y: 0}}
+          transition={{
+            delay: 0.5,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+        >
+
+          <div className='px-5  flex flex-row gap-10 flex-wrap justify-center '>
+            {plans.map((plan: PlanType, index) => (
+              <PlanCard plan={plan} key={index}/>
+            ))}
+          </div>
+        </motion.div>
 
       </LampContainer>
 
@@ -109,7 +132,7 @@ export const LampContainer = ({
         <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem] bg-slate-950 "></div>
       </div>
 
-      <div className="relative z-50 flex -translate-y-80 flex-col items-center px-5">
+      <div className="relative z-50 flex translate-y-36 flex-col items-center px-5">
         {children}
       </div>
     </div>
